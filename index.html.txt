@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pensiunea Aurora</title>
+<style>
+/* ===== Reset & Global ===== */
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif;}
+body{background:#f9f9f9;color:#333;line-height:1.6;}
+a{text-decoration:none;color:#fff;}
+.container{max-width:1100px;margin:0 auto;padding:0 20px;}
+h1,h2,h3{margin-bottom:10px;}
+.section{padding:40px 0;}
+.btn{display:inline-block;padding:10px 20px;background:#2b7a78;color:#fff;border-radius:5px;cursor:pointer;}
+.btn:hover{opacity:0.9;}
+
+/* ===== Header ===== */
+header{background:#2b7a78;color:#fff;padding:20px 0;}
+header .container{display:flex;justify-content:space-between;align-items:center;}
+header nav a{margin-left:15px;color:#fff;}
+
+/* ===== Hero ===== */
+.hero{background:#17223b;color:#fff;text-align:center;padding:80px 20px;}
+.hero h2{font-size:2.5rem;margin-bottom:10px;}
+
+/* ===== Camere ===== */
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.card{background:#fff;padding:15px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+.card img{width:100%;border-radius:10px;margin-bottom:10px;}
+
+/* ===== Facilități ===== */
+.facilities ul{list-style:disc;margin-left:20px;color:#555;}
+
+/* ===== Rezervare ===== */
+form{background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 8px rgba(0,0,0,0.1);}
+form input, form select{width:100%;padding:8px;margin-bottom:15px;border:1px solid #ccc;border-radius:5px;}
+.price{font-weight:bold;}
+
+/* ===== Footer ===== */
+footer{background:#17223b;color:#fff;text-align:center;padding:20px;}
+@media(max-width:768px){header .container{flex-direction:column;}}
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <h1>Pensiunea Aurora</h1>
+    <nav>
+      <a href="#camere">Camere</a>
+      <a href="#facilitati">Facilități</a>
+      <a href="#despre">Despre</a>
+      <a href="#rezerva">Rezervă</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero">
+  <h2>Vacanța ta începe aici</h2>
+  <p>Camere confortabile, servicii excelente și mic dejun inclus.</p>
+  <a href="#rezerva" class="btn">Rezervă acum</a>
+</section>
+
+<!-- Camere -->
+<section id="camere" class="section container">
+  <h2>Camere</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="Cameră dublă standard">
+      <h3>Cameră Dublă Standard</h3>
+      <p>Pat matrimonial, baie privată, 2 persoane.</p>
+      <p class="price">120 RON/noapte</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="Twin Deluxe">
+      <h3>Twin Deluxe</h3>
+      <p>Două paturi, balcon, 2 persoane.</p>
+      <p class="price">170 RON/noapte</p>
+    </div>
+    <div class="card">
+      <img src="https://via.placeholder.com/300x200" alt="Apartament familial">
+      <h3>Apartament Familial</h3>
+      <p>Două dormitoare, living, 4 persoane.</p>
+      <p class="price">260 RON/noapte</p>
+    </div>
+  </div>
+</section>
+
+<!-- Facilități -->
+<section id="facilitati" class="section container facilities">
+  <h2>Facilități</h2>
+  <ul>
+    <li>Mic dejun inclus</li>
+    <li>Wi-Fi gratuit</li>
+    <li>Parcare gratuită</li>
+    <li>Spa & masaj</li>
+    <li>Transfer aeroport</li>
+  </ul>
+</section>
+
+<!-- Despre -->
+<section id="despre" class="section container">
+  <h2>Despre noi</h2>
+  <p>Pensiunea Aurora oferă servicii calde și confort pentru întreaga familie. Situată aproape de principalele atracții locale, garantăm o ședere relaxantă.</p>
+</section>
+
+<!-- Rezervare -->
+<section id="rezerva" class="section container">
+  <h2>Rezervare Online</h2>
+  <form id="bookingForm">
+    <input type="text" id="fullname" placeholder="Nume complet" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="date" id="checkin" required>
+    <input type="date" id="checkout" required>
+    <select id="roomType" required>
+      <option value="120">Cameră Dublă Standard - 120 RON/noapte</option>
+      <option value="170">Twin Deluxe - 170 RON/noapte</option>
+      <option value="260">Apartament Familial - 260 RON/noapte</option>
+    </select>
+    <p class="price">Total estimat: <span id="total">0 RON</span></p>
+    <button type="submit" class="btn">Confirmă rezervarea</button>
+  </form>
+</section>
+
+<!-- Footer -->
+<footer>
+  <p>© Pensiunea Aurora | Toate drepturile rezervate</p>
+</footer>
+
+<script>
+// JavaScript simplu pentru calcul total
+const checkin = document.getElementById('checkin');
+const checkout = document.getElementById('checkout');
+const roomType = document.getElementById('roomType');
+const total = document.getElementById('total');
+
+function calcTotal() {
+  const ci = new Date(checkin.value);
+  const co = new Date(checkout.value);
+  const price = Number(roomType.value);
+  if(ci && co && co > ci){
+    const nights = (co - ci)/(1000*60*60*24);
+    total.textContent = (price * nights) + " RON";
+  } else {
+    total.textContent = "0 RON";
+  }
+}
+
+checkin.addEventListener('change', calcTotal);
+checkout.addEventListener('change', calcTotal);
+roomType.addEventListener('change', calcTotal);
+
+document.getElementById('bookingForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  alert("Rezervarea a fost înregistrată!");
+  this.reset();
+  total.textContent = "0 RON";
+});
+</script>
+
+</body>
+</html>
